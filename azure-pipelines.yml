@@ -21,12 +21,9 @@ steps:
   inputs:
     command: restore
     projects: '**/*.csproj'
-    feedsToUse: config
-    nugetConfigPath: NuGet.config    # Relative to root of the repository
-    externalFeedCredentials: $(nuget.key)
     
 - script: dotnet build
-  displayName: 'Run dotnet buildt'
+  displayName: 'Run dotnet build'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
