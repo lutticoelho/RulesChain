@@ -23,7 +23,7 @@ steps:
     projects: '**/*.csproj'
     feedsToUse: config
     nugetConfigPath: NuGet.config    # Relative to root of the repository
-    externalFeedCredentials: <Name of the NuGet service connection>
+    externalFeedCredentials: $(nuget.key)
     
 - script: dotnet build
   displayName: 'Run dotnet buildt'
