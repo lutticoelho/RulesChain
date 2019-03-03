@@ -17,14 +17,16 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
-    command: pack
-    versioningScheme: byPrereleaseNumber
-    packagesToPack: '**/RulesChain.csproj'
-    majorVersion: '$(Major)'
-    minorVersion: '$(Minor)'
-
+    command: restore
+    projects: '**/*.csproj'
+    feedsToUse: config
+    nugetConfigPath: NuGet.config    # Relative to root of the repository
+    externalFeedCredentials: <Name of the NuGet service connection>
+    
+- script: dotnet build
+  displayName: 'Run dotnet buildt'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
