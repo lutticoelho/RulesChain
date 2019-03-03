@@ -9,7 +9,7 @@ RulesChain is a small lib that simplify writing bussiness rules in .NET environm
 
 ## License ##
 
-RulesChain is Open Source software and released under the [MIT license](https://raw.githubusercontent.com/nunit/nunit/master/LICENSE.txt).
+RulesChain is Open Source software and released under the MIT license.
 
 ## Contributing ##
 
