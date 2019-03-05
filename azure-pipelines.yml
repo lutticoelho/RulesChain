@@ -49,7 +49,7 @@ steps:
   inputs:
     command: custom
     custom: nuget
-    arguments: push $(Build.ArtifactStagingDirectory)/packages/*.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json --no-service-endpoint -n
+    arguments: push $(Build.ArtifactStagingDirectory)/packages/*.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json --no-service-endpoint -n true
 
 - task: PublishBuildArtifacts@1
   displayName: publish artifacts
