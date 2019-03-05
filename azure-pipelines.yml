@@ -23,7 +23,7 @@ steps:
     command: restore
     projects: '**/*.csproj'
     
-- script: dotnet build
+- script: dotnet build $(buildConfiguration)
   displayName: 'Run dotnet build  $(buildConfiguration)'
 
 - script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration)  -o $(Build.ArtifactStagingDirectory)
@@ -33,3 +33,5 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: drop
     contents: '**/$(BuildConfiguration)/**/?(*.nupkg)'
+
+-script: dotnet nuget push artefactName.APIFramework/drop/RulesChain.$(Major).$(Minor).$(Build.BuildId).nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json
