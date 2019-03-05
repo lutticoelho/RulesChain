@@ -2,13 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.1</Version>
+    <Version>0.1.0</Version>
     <Authors>Lutti Coelho</Authors>
     <Product>RulesChain</Product>
     <RepositoryUrl>https://github.com/lutticoelho/RulesChain</RepositoryUrl>
-    <PackageTags>Rules, Chain, Bussiness, Pipe</PackageTags>
+    <PackageTags>Rules Design Pattern, Chain of Responsability, Business Rules, Middleware, Pipe</PackageTags>
     <AssemblyVersion>0.1.1.0</AssemblyVersion>
     <FileVersion>0.0.1.0</FileVersion>
+    <Description>RulesChain is a small lib that simplify writing business rules in .NET environment. Its based on Rules Design Pattern and Chain of Responsability Pattern and works like ASP.Net Core middlewares.</Description>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/lutticoelho/RulesChain</PackageProjectUrl>
+    <NeutralLanguage>en</NeutralLanguage>
+    <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
