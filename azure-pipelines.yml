@@ -36,8 +36,8 @@ steps:
 - script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration)
   displayName: 'Packing projects'
 
-- script: dotnet nuget push /home/vsts/work/1/s/src/RulesChain.Contracts/bin/Release/RulesChain.Contracts.0.1.18.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json
-  displayName: 'Pushing RulesChain.Contracts to Nuget.org'
-
-- script: dotnet nuget push /home/vsts/work/1/s/src/RulesChain.Contracts/bin/Release/RulesChain.0.1.18.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json
-  displayName: 'Pushing RulesChain.Contracts to Nuget.org'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: drop
+    contents: '**/$(BuildConfiguration)/**/?(*.nupkg)'
