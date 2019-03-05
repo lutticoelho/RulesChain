@@ -26,7 +26,8 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Run dotnet build  $(buildConfiguration)'
 
-- script: dotnet test **/RulesChain.UnitTest.csproj --logger trx
+- script: dotnet test test/RulesChain.UnitTest/RulesChain.UnitTest.csproj --logger trx
+  displayName: 'dotnet test RulesChain.UnitTest'
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
