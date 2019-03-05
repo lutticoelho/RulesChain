@@ -16,7 +16,7 @@ variables:
 
 steps:
 - script: echo Starting Release Build!
-  displayName: 'Starting Release Build'
+  displayName: 'Starting Release'
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore'
@@ -41,12 +41,8 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet pack $(Build.BuildId)
-  inputs:
-    command: pack
-    arguments: /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration) --no-symbols
-    packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
+- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration) --no-symbols -o '$(Build.ArtifactStagingDirectory)/packages'
+  displayName: packing version $(Major).$(Minor).$(Build.BuildId)
 
 - task: DotNetCoreCLI@2
   displayName: dotnet nuget push variables['Build.SourceBranch']
