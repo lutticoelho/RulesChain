@@ -16,14 +16,10 @@ variables:
 
 steps:
 - script: echo Starting Release Build!
-  displayName: 'Run a one-line script'
+  displayName: 'Starting Release Build'
 
 - task: DotNetCoreCLI@2
-  inputs:
-    command: restore
-    projects: '**/*.csproj'
-    
-- task: DotNetCoreCLI@2
+  displayName: 'Restore'
   inputs:
     command: restore
     projects: '**/*.csproj'
@@ -49,6 +45,7 @@ steps:
   displayName: dotnet pack
   inputs:
     command: pack
+    arguments: /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration) --no-symbols
     packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
 
 - task: DotNetCoreCLI@2
