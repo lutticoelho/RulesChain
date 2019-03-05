@@ -23,7 +23,7 @@ steps:
     command: restore
     projects: '**/*.csproj'
     
-- script: dotnet build **/*.csproj $(buildConfiguration)
+- script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Run dotnet build  $(buildConfiguration)'
 
 - script: dotnet test **/RulesChain.UnitTest.csproj --logger trx
