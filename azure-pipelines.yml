@@ -36,7 +36,7 @@ steps:
 
 - script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration)
   displayName: 'Packing projects'
-  workingDirectory: '$(Build.ArtifactStagingDirectory)/packages'
+  workingDirectory: '$(Build.ArtifactStagingDirectory)'
 
 - task: CopyFiles@2
   inputs:
@@ -45,7 +45,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: publish artifacts
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/packages'
 
 - task: DotNetCoreCLI@2
   displayName: dotnet nuget push $(variables['Build.SourceBranch'])
