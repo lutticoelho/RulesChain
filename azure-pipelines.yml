@@ -1,0 +1,46 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+variables:
+  Major: '0'
+  Minor: '1'
+  buildConfiguration: 'Release'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+    
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Run dotnet build  $(buildConfiguration)'
+
+- script: dotnet test test/RulesChain.UnitTest/RulesChain.UnitTest.csproj --logger trx
+  displayName: 'dotnet test RulesChain.UnitTest'
+- task: PublishTestResults@2
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration)
+  displayName: 'Packing projects'
+
+- task: CopyFiles@2
+  inputs:
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: drop
+    contents: '**/$(BuildConfiguration)/**/?(*.nupkg)'
