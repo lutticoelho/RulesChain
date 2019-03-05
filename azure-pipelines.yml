@@ -44,11 +44,3 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: drop
     contents: '**/$(BuildConfiguration)/**/?(*.nupkg)'
-
-- task: NuGetCommand@2
-  inputs:
-    command: push
-    nuGetFeedType: external
-    publishFeedCredentials: '$(nuget.key)'
-    versioningScheme: byEnvVar
-    versionEnvVar: $(Major).$(Minor).$(Build.BuildId)
