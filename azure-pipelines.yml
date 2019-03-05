@@ -26,12 +26,12 @@ steps:
 - script: dotnet build $(buildConfiguration)
   displayName: 'Run dotnet build  $(buildConfiguration)'
 
-- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration)  -o $(Build.ArtifactStagingDirectory)
-
-- task: PublishBuildArtifacts@1
+- script: dotnet test **/*.Tests.Unit.csproj --logger trx
+- task: PublishTestResults@2
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: drop
-    contents: '**/$(BuildConfiguration)/**/?(*.nupkg)'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 
--script: dotnet nuget push artefactName.APIFramework/drop/RulesChain.$(Major).$(Minor).$(Build.BuildId).nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json
+- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration)
+
+- script: dotnet nuget push *.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json
