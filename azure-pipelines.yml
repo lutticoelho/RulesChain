@@ -10,8 +10,9 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  Major: '1'
-  Minor: '0'
+  Major: '0'
+  Minor: '1'
+  buildConfiguration: 'Release'
 
 steps:
 - script: echo Hello, world!
@@ -23,9 +24,12 @@ steps:
     projects: '**/*.csproj'
     
 - script: dotnet build
-  displayName: 'Run dotnet build'
+  displayName: 'Run dotnet build  $(buildConfiguration)'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration)  -o $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: drop
+    contents: '**/$(BuildConfiguration)/**/?(*.nupkg)'
