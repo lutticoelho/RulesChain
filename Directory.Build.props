@@ -18,7 +18,7 @@
     <Otherwise>
       <PropertyGroup>
         <!-- Release version numbers are MAJOR.MINOR.# -->
-        <VersionPrefix>$(VersionPrefix).$(BUILD_BUILDID.PadLeft(1, '0'))</VersionPrefix>
+        <VersionPrefix>$(VersionPrefix).$(Build.BuildId)</VersionPrefix>
       </PropertyGroup>
     </Otherwise>
   </Choose>

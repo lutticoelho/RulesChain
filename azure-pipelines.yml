@@ -42,14 +42,14 @@ steps:
     testResultsFiles: '**/*.trx'
 
 - task: DotNetCoreCLI@2
-  displayName: dotnet pack
+  displayName: dotnet pack $(Build.BuildId)
   inputs:
     command: pack
     arguments: /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration) --no-symbols
     packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
 
 - task: DotNetCoreCLI@2
-  displayName: dotnet nuget push $(variables['Build.SourceBranch'])
+  displayName: dotnet nuget push variables['Build.SourceBranch']
   inputs:
     command: custom
     custom: nuget
