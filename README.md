@@ -5,6 +5,7 @@ RulesChain is a small lib that simplify writing business rules in .NET environme
 
 ## Table of Contents ##
 
+- [How to install](#how-to-install)
 - [How to use](#how-to-use)
     - [Create your first Rule](#create-your-first-rule)
     - [Create your first Rule Chain](#create-your-first-rule-chain)
@@ -12,6 +13,14 @@ RulesChain is a small lib that simplify writing business rules in .NET environme
     - [Execute your Rule Chain](#execute-your-rule-chain)
 - [License](#license)
 - [Contributing](#contributing)
+
+## How to install ##
+
+Nuget Package Manager
+> Install-Package RulesChain
+
+.Net cli
+> dotnet add package RulesChain
 
 ## How to use ##
 
