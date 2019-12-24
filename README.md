@@ -10,7 +10,7 @@ RulesChain is a small lib that simplify writing business rules in .NET environme
 
 ## How to use ##
 
-# Create your first Rule #
+### Create your first Rule ###
 
 Imagine that you are developing an e-commerce app and you have to apply automatic discounts for each order before finish the sale.
 
@@ -84,12 +84,17 @@ As you saw every rule contains two methods `ShoulRun` and `Run`.
 
 Now that you have all your bussiness rules done, you need to put it on a chain of execution.
 
+### Create your first Rule Chain ###
+
 ````
      var chain = new RuleChain<ApplyDiscountContext>()
                 .Use<FakeBirthdayDiscountRule>()
                 .Use<FirstOrderDiscount>()
                 .Build();
 ````
+When you call the build method, your chain will be created with all your rules in the same sequence that you defined on `.Use<>`
+
+### Create your first Rule Context ###
 
 Prepare your Rule context with the neccessery variables:
 
@@ -130,6 +135,8 @@ Prepare your Rule context with the neccessery variables:
     context.Properties["IsFirstOrder"] = true;
     
 ````
+
+### Execute your Rule Chain ###
 
 Now just execute the `Invoke`method of your chain. 
 
