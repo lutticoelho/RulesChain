@@ -1,11 +1,9 @@
 ﻿namespace RulesChain
 {
-    internal class EndOfChainRule<T> : Rule<T>
+    public class EndOfChainRule<T> : Rule<T>
     {
-        public EndOfChainRule(Rule<T> next) : base(next)
-        {
-        }
-
+        public EndOfChainRule() : base(null){}
+        
         public override bool ShouldRun(T context)
         {
             return true;
@@ -18,7 +16,7 @@
 
         internal static EndOfChainRule<T> EndOfChain()
         {
-            return new EndOfChainRule<T>(null);
+            return new EndOfChainRule<T>();
         }
 
     }
