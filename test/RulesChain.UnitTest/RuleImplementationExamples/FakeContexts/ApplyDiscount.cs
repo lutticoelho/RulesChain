@@ -1,12 +1,12 @@
 ﻿using RulesChain.Contracts;
 using System.Collections.Generic;
-using RulesChain.UnitTest.FakeContexts.Models;
+using RulesChain.UnitTest.RuleImplementationExamples.FakeContexts.Models;
 
-namespace RulesChain.UnitTest.FakeContexts
+namespace RulesChain.UnitTest.RuleImplementationExamples.FakeContexts
 {
     public class ApplyDiscountContext : IRuleContext<ShoppingCart>
     {
-        public IDictionary<string, object> Properties { get; }
+        public IDictionary<string, object> Properties { get; } = new Dictionary<string, object>();
 
         public ShoppingCart ShoppingCart { get; set; }
 

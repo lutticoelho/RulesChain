@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="FakeRules\IsValidCouponDiscount.cs~RF2345f649.TMP" />
+    <None Remove="RuleImplementationExamples\FakeRules\IsValidCouponDiscount.cs~RF2345f649.TMP" />
   </ItemGroup>
 
   <ItemGroup>

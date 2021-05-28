@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RulesChain.UnitTest.FakeContexts.Models
+namespace RulesChain.UnitTest.RuleImplementationExamples.FakeContexts.Models
 {
     public class ShoppingCart
     {

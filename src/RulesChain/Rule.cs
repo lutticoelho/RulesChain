@@ -28,9 +28,9 @@ namespace RulesChain
         {
             if(ShouldRun(context))
                 return Run(context);
-            else
-               return Next != null 
-                    ? Next.Invoke(context) 
+               
+            return Next != null 
+                    ? Next(context) 
                     : Task.CompletedTask;
         }
     }

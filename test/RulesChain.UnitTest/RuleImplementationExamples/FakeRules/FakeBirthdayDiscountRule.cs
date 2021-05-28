@@ -2,20 +2,20 @@
 using System.Linq;
 using System.Threading.Tasks;
 using RulesChain.Contracts;
-using RulesChain.UnitTest.FakeContexts;
+using RulesChain.UnitTest.RuleImplementationExamples.FakeContexts;
 
-namespace RulesChain.UnitTest.FakeRules
+namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
 {
     public class FakeBirthdayDiscountRule : Rule<ApplyDiscountContext>
     {
         public FakeBirthdayDiscountRule(RuleHandlerDelegate<ApplyDiscountContext> next) : base(next)
-        {}
+        { }
 
         public override async Task Run(ApplyDiscountContext context)
         {
             // Gets 10% of discount;
             var birthDayDiscount = context.ShoppingCart.Items.Sum(i => i.Price * 0.1M);
-            await Next.Invoke(context);
+            await Next(context);
 
             // Only apply birthday discount if the discount applied by the other rules are smaller than this
             if (birthDayDiscount > context.DiscountApplied)

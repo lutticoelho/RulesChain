@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RulesChain.UnitTest.FakeDependencies
+namespace RulesChain.UnitTest.RuleImplementationExamples.FakeDependencies
 {
     public interface IFakeRepository
     {
