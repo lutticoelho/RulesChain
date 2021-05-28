@@ -8,5 +8,6 @@ namespace RulesChain.UnitTest.FakeContexts.Models
         public string CilentName { get; set; }
         public DateTime ClientBirthday { get; set; }
         public IEnumerable<ShopItem> Items { get; set; }
+        public string CouponCode { get; set; }
     }
 }
