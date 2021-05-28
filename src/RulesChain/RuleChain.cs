@@ -13,7 +13,7 @@ namespace RulesChain
         private readonly Stack<Func<RuleHandlerDelegate<TContext>, RuleHandlerDelegate<TContext>>> _components =
             new Stack<Func<RuleHandlerDelegate<TContext>, RuleHandlerDelegate<TContext>>>();
 
-        private bool _built = false;
+        private bool _built;
 
         public RuleChain(IServiceProvider services) => _services = services;
 

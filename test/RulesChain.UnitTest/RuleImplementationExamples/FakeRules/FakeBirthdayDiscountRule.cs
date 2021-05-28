@@ -14,7 +14,7 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
         public override async Task Run(ApplyDiscountContext context)
         {
             // Gets 10% of discount;
-            var birthDayDiscount = context.ShoppingCart.Items.Sum(i => i.Price * 0.1M);
+            var birthDayDiscount = context.Context.Items.Sum(i => i.Price * 0.1M);
             await Next(context);
 
             // Only apply birthday discount if the discount applied by the other rules are smaller than this
@@ -27,7 +27,7 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
 
         public override bool ShouldRun(ApplyDiscountContext context)
         {
-            var dayAndMonth = context.ShoppingCart.ClientBirthday.ToString("ddMM");
+            var dayAndMonth = context.Context.ClientBirthday.ToString("ddMM");
             var todayDayAndMonth = DateTime.UtcNow.ToString("ddMM");
             return dayAndMonth == todayDayAndMonth;
         }

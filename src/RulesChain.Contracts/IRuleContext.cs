@@ -16,6 +16,6 @@ namespace RulesChain.Contracts
         /// <summary>
         /// The specific context of a rule chain
         /// </summary>
-        TContext ShoppingCart { get; }
+        TContext Context { get; }
     }
 }

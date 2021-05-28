@@ -20,7 +20,7 @@ namespace RulesChain.UnitTest.RuleImplementationExamples
         [InlineData(100, 900, 0, "John Doe", 100)]
         public void ShouldApplyHigherDiscount(decimal priceItemOne, decimal priceItemTwo, decimal couponDiscount, string clientName, decimal expectedDiscount)
         {
-            // Arrage
+            // Arrange
             var fakeRepository = new Mock<IFakeRepository>();
             fakeRepository.Setup(_ => _.IsValidCouponCode(It.IsAny<string>()))
                 .Returns(new Tuple<bool, decimal>(true, couponDiscount));
@@ -37,16 +37,16 @@ namespace RulesChain.UnitTest.RuleImplementationExamples
 
             var context = new ApplyDiscountContext
             {
-                ShoppingCart = new ShoppingCart
+                Context = new ShoppingCart
                 {
-                    CilentName = clientName,
+                    ClientName = clientName,
                     Items = new List<ShopItem>()
                     {
                         new ShopItem {Name = "Item 1", Price = priceItemOne},
                         new ShopItem {Name = "Item 2", Price = priceItemTwo}
                     },
                     ClientBirthday = DateTime.UtcNow,
-                    CouponCode = "TestCoupom005"
+                    CouponCode = "TestCoupon005"
                 }
             };
 

@@ -8,7 +8,7 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeContexts
     {
         public IDictionary<string, object> Properties { get; } = new Dictionary<string, object>();
 
-        public ShoppingCart ShoppingCart { get; set; }
+        public ShoppingCart Context { get; set; }
 
         public decimal DiscountApplied { get; set; }
     }

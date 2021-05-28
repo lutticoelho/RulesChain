@@ -13,10 +13,10 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
         public override async Task Run(ApplyDiscountContext context)
         {
             // Gets 50% of discount;
-            var myDiscount = context.ShoppingCart.Items.Sum(i => i.Price * 0.5M);
+            var myDiscount = context.Context.Items.Sum(i => i.Price * 0.5M);
             await Next(context);
 
-            // Only apply birthday disccount if the discount applied by the other rules are smaller than this
+            // Only apply birthday discount if the discount applied by the other rules are smaller than this
             if (myDiscount > context.DiscountApplied)
             {
                 context.DiscountApplied = myDiscount;
@@ -26,7 +26,7 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
 
         public override bool ShouldRun(ApplyDiscountContext context)
         {
-            return context.ShoppingCart.CilentName.ToUpper().Contains("LUTTI");
+            return context.Context.ClientName.ToUpper().Contains("LUTTI");
         }
     }
 }

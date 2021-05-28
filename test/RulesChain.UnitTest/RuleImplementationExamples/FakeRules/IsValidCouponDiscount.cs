@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using RulesChain.Contracts;
 using RulesChain.UnitTest.RuleImplementationExamples.FakeContexts;
 using RulesChain.UnitTest.RuleImplementationExamples.FakeDependencies;
@@ -20,14 +19,14 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
 
         public override Task Run(ApplyDiscountContext context)
         {
-            var (isValid, discount) = _repository.IsValidCouponCode(context.ShoppingCart.CouponCode);
+            var (isValid, discount) = _repository.IsValidCouponCode(context.Context.CouponCode);
 
-            // Only apply birthday disccount if the discount applied by the other rules are smaller than this
+            // Only apply birthday discount if the discount applied by the other rules are smaller than this
             if (isValid && discount > context.DiscountApplied)
             {
                 context.DiscountApplied = discount;
                 context.Properties["discountType"] = "IsValidCouponDiscount";
-                context.Properties["discountAppliedToProducts"] =  context.ShoppingCart.Items.Aggregate("", (result, next) => result += next.Name);
+                context.Properties["discountAppliedToProducts"] =  context.Context.Items.Aggregate("", (result, next) => result += next.Name);
             }
 
             return Next(context);
@@ -35,7 +34,7 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
 
         public override bool ShouldRun(ApplyDiscountContext context)
         {
-            return !string.IsNullOrWhiteSpace(context.ShoppingCart?.CouponCode) && context.ShoppingCart?.Items.Any() == true;
+            return !string.IsNullOrWhiteSpace(context.Context?.CouponCode) && context.Context?.Items.Any() == true;
         }
     }
 }
