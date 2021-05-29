@@ -55,6 +55,7 @@ steps:
     command: 'pack'
     configuration: '$(configuration)'
     packagesToPack: '**\*.csproj'
+    versioningScheme: 'byPrereleaseNumber'
     requestedMajorVersion: '$(Major)'
     requestedMinorVersion: '$(Minor)'
     requestedPatchVersion: '$(Build.BuildId)'
