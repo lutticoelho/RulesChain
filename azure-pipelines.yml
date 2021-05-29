@@ -33,8 +33,10 @@ steps:
 
 - task: VSTest@2
   inputs:
+    testSelector: 'testAssemblies'
     testAssemblyVer2: |
-     **\$(BuildConfiguration)\**\*Test*.dll
+     **\bin\**\*Test*.dll
+     !**\obj\**
     codeCoverageEnabled: false
     testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
     platform: '$(buildPlatform)'
