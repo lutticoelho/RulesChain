@@ -38,6 +38,15 @@ steps:
     arguments: --buildPlatform
     projects: 'test/**/*.csproj'
 
+- task: VSTest@2
+  inputs:
+    testAssemblyVer2: |
+     **\$(BuildConfiguration)\**\*Test*.dll
+    codeCoverageEnabled: true
+    testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
