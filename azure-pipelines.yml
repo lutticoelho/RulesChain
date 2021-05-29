@@ -31,7 +31,7 @@ steps:
   displayName: 'Run dotnet build $(buildConfiguration)'
   inputs:
     command: build
-    arguments: --configuration $(buildConfiguration) --version $(Major).$(Minor).$(Build.BuildId)
+    arguments: --configuration $(buildConfiguration) --version $(PackVersion)
 
 - task: VSTest@2
   inputs:
@@ -51,20 +51,14 @@ steps:
     testResultsFiles: '**\*.trx'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Pack the package $(Major).$(Minor).$(Build.BuildId)'
+  displayName: 'Pack the package $(PackVersion)'
   inputs:
     command: 'pack'
     configuration: '$(configuration)'
     packagesToPack: '**\*.csproj'
     versioningScheme: 'byEnvVar'
-    versionEnvVar: '$(PackVersion)'
+    versionEnvVar: 'PackVersion'
     verbosityPack: 'Detailed'
-
-
-# - task: NuGetCommand@2
-#   displayName: nuget pack
-#   inputs:
-#     command: 'pack'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish the package'
@@ -73,24 +67,9 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-# - task: NuGetCommand@2
-#   displayName: nuget push
-#   inputs:
-#     command: 'push'
-#     packagesToPush: '**\*.nupkg'
-#     nuGetFeedType: 'external'
-#     publishFeedCredentials: '$(nuget.key)'
-#     verbosityPush: 'Detailed'
-#     configuration: '$(BuildConfiguration)'
-
-# - task: PublishBuildArtifacts@1
-#   displayName: publish artifacts
-#   inputs:
-#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-
-# - task: PowerShell@2
-#   displayName: dotnet nuget push variables['Build.SourceBranch']
-#   inputs:
-#     targetType: 'inline'
-#     script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https:\/api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
+- task: PowerShell@2
+  displayName: nuget push $(Build.SourceBranch)
+  inputs:
+    targetType: 'inline'
+    script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https:\/api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
 
