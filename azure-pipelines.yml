@@ -65,7 +65,9 @@ steps:
   displayName: change directory
   inputs:
     targetType: 'inline'
-    script: 'cd $(Build.ArtifactStagingDirectory)'
+    script: |
+      cd $(Build.ArtifactStagingDirectory)
+      ls
 
 - task: PowerShell@2
   displayName: ls
