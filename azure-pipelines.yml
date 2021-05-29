@@ -30,7 +30,7 @@ steps:
   displayName: 'Run dotnet build $(buildConfiguration)'
   inputs:
     command: build
-    arguments: --configuration $(buildConfiguration)
+    arguments: --configuration $(buildConfiguration) --version $(Major).$(Minor).$(Build.BuildId)
 
 - task: VSTest@2
   inputs:
