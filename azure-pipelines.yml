@@ -27,7 +27,7 @@ steps:
     packagesToPack: '**/*.csproj'
     
 - task: DotNetCoreCLI@2
-  displayName: 'Run dotnet build  $(buildConfiguration)'
+  displayName: 'Run dotnet build $(buildConfiguration)'
   inputs:
     command: build
     arguments: --configuration $(buildConfiguration)
@@ -53,7 +53,7 @@ steps:
   displayName: 'Pack the package'
   inputs:
     command: 'pack'
-    configuration: $(configuration)
+    configuration: '$(configuration)'
     packagesToPack: '**\*.csproj'
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
