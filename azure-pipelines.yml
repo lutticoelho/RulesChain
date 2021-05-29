@@ -59,15 +59,22 @@ steps:
     patchVersion: '$(Build.BuildId)'
     verbosityPack: 'Detailed'
 
-- task: NuGetCommand@2
-  displayName: nuget push
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish the package'
   inputs:
-    command: 'push'
-    packagesToPush: '**\*.nupkg'
-    nuGetFeedType: 'external'
-    publishFeedCredentials: '$(nuget.key)'
-    verbosityPush: 'Detailed'
-    configuration: '$(BuildConfiguration)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+# - task: NuGetCommand@2
+#   displayName: nuget push
+#   inputs:
+#     command: 'push'
+#     packagesToPush: '**\*.nupkg'
+#     nuGetFeedType: 'external'
+#     publishFeedCredentials: '$(nuget.key)'
+#     verbosityPush: 'Detailed'
+#     configuration: '$(BuildConfiguration)'
 
 # - task: PublishBuildArtifacts@1
 #   displayName: publish artifacts
