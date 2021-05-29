@@ -48,7 +48,7 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration) -o '$(Build.ArtifactStagingDirectory)\packages'
+- script: dotnet pack /p:PackageVersion=$(Major).$(Minor).$(Build.BuildId) --configuration $(buildConfiguration) -o '$(Build.ArtifactStagingDirectory)\packages'
   displayName: packing version $(Major).$(Minor).$(Build.BuildId)
 
 - task: DotNetCoreCLI@2
