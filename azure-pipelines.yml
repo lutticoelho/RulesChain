@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- pipeline
 
 pool:
   vmImage: 'windows-latest'
