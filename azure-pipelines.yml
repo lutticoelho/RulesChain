@@ -13,6 +13,7 @@ pool:
 variables:
   Major: '0'
   Minor: '1'
+  PackVersion: '$(Major).$(Minor).$(Build.BuildId)'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -55,10 +56,8 @@ steps:
     command: 'pack'
     configuration: '$(configuration)'
     packagesToPack: '**\*.csproj'
-    versioningScheme: 'byPrereleaseNumber'
-    requestedMajorVersion: '$(Major)'
-    requestedMinorVersion: '$(Minor)'
-    requestedPatchVersion: '$(Build.BuildId)'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'PackVersion'
     verbosityPack: 'Detailed'
 
 
