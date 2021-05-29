@@ -63,7 +63,7 @@ steps:
   displayName: nuget push
   inputs:
     command: 'push'
-    packagesToPush: '$(System.DefaultWorkingDirectory)\**\*.nupkg;!$(System.DefaultWorkingDirectory)\**\*.symbols.nupkg'
+    packagesToPush: '**\*.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: '$(nuget.key)'
     verbosityPush: 'Detailed'
