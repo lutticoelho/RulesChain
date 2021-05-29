@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RulesChain", "src\RulesChain\RulesChain.csproj", "{49374E78-A8B5-45F0-AEB3-11D89AA18E11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RulesChain.Contracts", "src\RulesChain.Contracts\RulesChain.Contracts.csproj", "{D571F99E-6591-4B79-9559-DC16F13EBE69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RulesChain.Contracts", "src\RulesChain.Contracts\RulesChain.Contracts.csproj", "{D571F99E-6591-4B79-9559-DC16F13EBE69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RulesChain.UnitTest", "test\RulesChain.UnitTest\RulesChain.UnitTest.csproj", "{4918D63C-B0C3-44D0-AB31-F84328D81F8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RulesChain.UnitTest", "test\RulesChain.UnitTest\RulesChain.UnitTest.csproj", "{4918D63C-B0C3-44D0-AB31-F84328D81F8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B4DEC03E-D990-44F4-BF94-1DBE0518418A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

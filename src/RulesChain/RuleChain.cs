@@ -1,31 +1,115 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using RulesChain.Contracts;
 
 namespace RulesChain
 {
-    public class RuleChain<T> : IRuleChain<T>
+    public class RuleChain<TContext> : IRuleChain<TContext>
     {
-        private readonly IList<Type> _components = new List<Type>();
+        private readonly IServiceProvider _services;
+        private readonly Stack<Func<RuleHandlerDelegate<TContext>, RuleHandlerDelegate<TContext>>> _components =
+            new Stack<Func<RuleHandlerDelegate<TContext>, RuleHandlerDelegate<TContext>>>();
 
-        public IRuleChain<T> Use<TRule>()
+        private bool _built;
+
+        public RuleChain(IServiceProvider services) => _services = services;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        protected virtual object GetService(Type type, params object[] args)
         {
-            _components.Add(typeof(TRule));
+            return args == null || args.Length == 0
+                ? _services.GetService(type)
+                : Activator.CreateInstance(type, args);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public RuleHandlerDelegate<TContext> Build()
+        {
+            if (_built) throw new InvalidOperationException("Chain can only be built once");
+            var next = new RuleHandlerDelegate<TContext>(context => Task.CompletedTask);
+            while (_components.Any())
+            {
+                var component = _components.Pop();
+                next = component(next);
+            }
+            _built = true;
+            return next;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TRule"></typeparam>
+        /// <returns></returns>
+        public IRuleChain<TContext> Use<TRule>()
+        {
+            _components.Push(CreateDelegate<TRule>);
             return this;
         }
 
-        public IRule<T> Build()
+        private RuleHandlerDelegate<TContext> CreateDelegate<TRule>(RuleHandlerDelegate<TContext> next)
         {
-            IRule<T> app = EndOfChainRule<T>.EndOfChain();
+            var ruleType = typeof(TRule);
+            MethodInfo methodInfo = GetValidInvokeMethodInfo(ruleType);
 
-            foreach (var component in _components.Reverse())
-            {
-                app = (IRule<T>)Activator.CreateInstance(component,app);
-            }
+            //Constructor parameters
+            var constructorArguments = new object[] { next };
+            var dependencies = GetDependencies(ruleType, GetService);
+            if (dependencies.Any())
+                constructorArguments = constructorArguments.Concat(dependencies).ToArray();
 
-            return app;
+            //Create the rule instance using the constructor arguments (including dependencies)
+            var rule = GetService(ruleType, constructorArguments);
+
+            //return the delegate for the rule
+            return (RuleHandlerDelegate<TContext>)methodInfo
+                .CreateDelegate(typeof(RuleHandlerDelegate<TContext>), rule);
+        }
+
+        private MethodInfo GetValidInvokeMethodInfo(Type type)
+        {
+            //Must have public method named Invoke or InvokeAsync.
+            var methodInfo = type.GetMethod("Invoke") ?? type.GetMethod("InvokeAsync");
+            if (methodInfo == null)
+                throw new InvalidOperationException("Missing invoke method");
+
+            //This method must: Return a Task.
+            if (!typeof(Task).IsAssignableFrom(methodInfo.ReturnType))
+                throw new InvalidOperationException("invalid invoke return type");
+            
+            //and accept a first parameter of type TContext.
+            ParameterInfo[] parameters = methodInfo.GetParameters();
+            if (parameters.Length != 1 || parameters[0].ParameterType != typeof(TContext))
+                throw new InvalidOperationException("invalid invoke parameter type");
+
+            return methodInfo;
+        }
+
+        private object[] GetDependencies(Type middlewareType, Func<Type, object[], object> factory)
+        {
+            var constructors = middlewareType.GetConstructors().Where(c => c.IsPublic).ToArray();
+            var constructor = constructors.Length == 1 ? constructors[0]
+                : constructors.OrderByDescending(c => c.GetParameters().Length).FirstOrDefault();
+
+            if (constructor == null)
+                return Array.Empty<object>();
+
+            var ctorArgsTypes = constructor.GetParameters().Select(p => p.ParameterType).ToArray();
+            return ctorArgsTypes
+                .Skip(1) //Skipping first argument since it is suppose to be next delegate
+                .Select(parameter => factory(parameter, null)) //resolve other parameters
+                .ToArray();
         }
     }
-
 }
