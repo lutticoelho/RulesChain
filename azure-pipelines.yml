@@ -58,29 +58,24 @@ steps:
     minorVersion: '$(Minor)'
     patchVersion: '$(Build.BuildId)'
 
+- task: NuGetCommand@2
+  displayName: nuget push
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)\**\*.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: '$(nuget.key)'
+    verbosityPush: 'Detailed'
+    configuration: '$(BuildConfiguration)'
+
 # - task: PublishBuildArtifacts@1
 #   displayName: publish artifacts
 #   inputs:
 #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
 
-- task: PowerShell@2
-  displayName: change directory
-  inputs:
-    targetType: 'inline'
-    script: |
-      cd $(Build.ArtifactStagingDirectory)
-        echo 'changed directory'
-          ls
-
-- task: PowerShell@2
-  displayName: ls
-  inputs:
-    targetType: 'inline'
-    script: 'ls'
-
-- task: PowerShell@2
-  displayName: dotnet nuget push variables['Build.SourceBranch']
-  inputs:
-    targetType: 'inline'
-    script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
+# - task: PowerShell@2
+#   displayName: dotnet nuget push variables['Build.SourceBranch']
+#   inputs:
+#     targetType: 'inline'
+#     script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
 
