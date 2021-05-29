@@ -57,12 +57,13 @@ steps:
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
     patchVersion: '$(Build.BuildId)'
+    verbosityPack: 'Detailed'
 
 - task: NuGetCommand@2
   displayName: nuget push
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)\**\*.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)\*.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: '$(nuget.key)'
     verbosityPush: 'Detailed'
