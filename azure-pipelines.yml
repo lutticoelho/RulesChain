@@ -49,15 +49,23 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**\*.trx'
 
-- task: NuGetCommand@2
-  displayName: nuget pack
+- task: DotNetCoreCLI@2
+  displayName: 'Pack the package'
   inputs:
     command: 'pack'
+    configuration: $(configuration)
+    packagesToPack: $(projectPath)
     packagesToPack: '**\src\*.csproj'
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
     patchVersion: '$(Build.BuildId)'
     verbosityPack: 'Detailed'
+    nobuild: true
+    
+# - task: NuGetCommand@2
+#   displayName: nuget pack
+#   inputs:
+#     command: 'pack'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish the package'
