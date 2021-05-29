@@ -37,6 +37,7 @@ steps:
     testAssemblyVer2: |
      **\bin\**\*Test*.dll
      !**\obj\**
+     !**/*testadapter.dll
     codeCoverageEnabled: false
     testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
     platform: '$(buildPlatform)'
