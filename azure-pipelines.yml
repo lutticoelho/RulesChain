@@ -54,14 +54,13 @@ steps:
   inputs:
     command: 'pack'
     configuration: $(configuration)
-    packagesToPack: $(projectPath)
     packagesToPack: '**\src\*.csproj'
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
     patchVersion: '$(Build.BuildId)'
     verbosityPack: 'Detailed'
     nobuild: true
-    
+
 # - task: NuGetCommand@2
 #   displayName: nuget pack
 #   inputs:
