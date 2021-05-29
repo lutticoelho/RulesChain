@@ -46,7 +46,7 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+    testResultsFiles: '**\*.trx'
 
 - task: NuGetCommand@2
   displayName: nuget pack
@@ -55,12 +55,11 @@ steps:
     packagesToPack: '**\src\*.csproj'
     packDestination: '$(Build.ArtifactStagingDirectory)'
 
-- task: DotNetCoreCLI@2
+- task: PowerShell@2
   displayName: dotnet nuget push variables['Build.SourceBranch']
   inputs:
-    command: custom
-    custom: nuget
-    arguments: push $(Build.ArtifactStagingDirectory)\*.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json --no-service-endpoint -n true
+    targetType: 'inline'
+    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json --no-service-endpoint -n true'
 
 - task: PublishBuildArtifacts@1
   displayName: publish artifacts
