@@ -54,12 +54,14 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**\src\*.csproj'
-    packDestination: '$(Build.ArtifactStagingDirectory)'
+    majorVersion: '$(Major)'
+    minorVersion: '$(Minor)'
+    patchVersion: '$(Build.BuildId)'
 
-- task: PublishBuildArtifacts@1
-  displayName: publish artifacts
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+# - task: PublishBuildArtifacts@1
+#   displayName: publish artifacts
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
 
 - task: PowerShell@2
   displayName: change directory
@@ -67,7 +69,8 @@ steps:
     targetType: 'inline'
     script: |
       cd $(Build.ArtifactStagingDirectory)
-      ls
+        echo 'changed directory'
+          ls
 
 - task: PowerShell@2
   displayName: ls
