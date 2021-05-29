@@ -5,8 +5,8 @@ namespace RulesChain.Contracts
     /// <summary>
     /// The context used to share data between rules
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IRuleContext<T>
+    /// <typeparam name="TContext"></typeparam>
+    public interface IRuleContext<TContext>
     {
         /// <summary>
         /// Gets a key/value collection that can be used to share data between rules.
@@ -16,6 +16,6 @@ namespace RulesChain.Contracts
         /// <summary>
         /// The specific context of a rule chain
         /// </summary>
-        T Context { get; }
+        TContext Context { get; }
     }
 }
