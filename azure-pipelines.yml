@@ -35,7 +35,7 @@ steps:
   inputs:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\**\*Test*.dll
-    codeCoverageEnabled: true
+    codeCoverageEnabled: false
     testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
