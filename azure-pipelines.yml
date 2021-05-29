@@ -38,7 +38,7 @@ steps:
      **\bin\**\*Test*.dll
      !**\obj\**
      !**/*testadapter.dll
-    codeCoverageEnabled: false
+    codeCoverageEnabled: true
     testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
@@ -59,7 +59,7 @@ steps:
   displayName: dotnet nuget push variables['Build.SourceBranch']
   inputs:
     targetType: 'inline'
-    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json --no-service-endpoint -n true'
+    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
 
 - task: PublishBuildArtifacts@1
   displayName: publish artifacts
