@@ -48,8 +48,12 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-- script: dotnet pack /p:PackageVersion=$(Major).$(Minor).$(Build.BuildId) --configuration $(buildConfiguration) -o '$(Build.ArtifactStagingDirectory)\packages'
-  displayName: packing version $(Major).$(Minor).$(Build.BuildId)
+- task: NuGetCommand@2
+  displayName: nuget pack
+  inputs:
+    command: 'pack'
+    packagesToPack: '**\src\*.csproj'
+    packDestination: '$(Build.ArtifactStagingDirectory)'
 
 - task: DotNetCoreCLI@2
   displayName: dotnet nuget push variables['Build.SourceBranch']
