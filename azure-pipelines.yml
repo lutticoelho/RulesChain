@@ -54,7 +54,7 @@ steps:
   inputs:
     command: 'pack'
     configuration: $(configuration)
-    packagesToPack: '**\src\*.csproj'
+    packagesToPack: '**\*.csproj'
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
     patchVersion: '$(Build.BuildId)'
