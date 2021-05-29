@@ -31,13 +31,6 @@ steps:
     command: build
     arguments: --configuration $(buildConfiguration)
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet test
-  inputs:
-    command: test
-    arguments: --buildPlatform
-    projects: 'test/**/*.csproj'
-
 - task: VSTest@2
   inputs:
     testAssemblyVer2: |
