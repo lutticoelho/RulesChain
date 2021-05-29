@@ -19,11 +19,11 @@ steps:
 - script: echo Starting Release Build!
   displayName: 'Starting Release'
 
-- task: DotNetCoreCLI@2
+- task: NuGetCommand@2
   displayName: 'Restore'
   inputs:
     command: restore
-    projects: '**/*.csproj'
+    packagesToPack: '**/*.csproj'
     
 - task: DotNetCoreCLI@2
   displayName: 'Run dotnet build  $(buildConfiguration)'
@@ -35,6 +35,7 @@ steps:
   displayName: dotnet test
   inputs:
     command: test
+    arguments: --buildPlatform
     projects: 'test/**/*.csproj'
 
 - task: PublishTestResults@2
