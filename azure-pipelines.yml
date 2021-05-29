@@ -38,7 +38,7 @@ steps:
     testAssemblyVer2: |
      **\bin\**\*Test*.dll
      !**\obj\**
-     !**/*testadapter.dll
+     !**\*testadapter.dll
     codeCoverageEnabled: true
     testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
     platform: '$(buildPlatform)'
@@ -63,7 +63,7 @@ steps:
   displayName: nuget push
   inputs:
     command: 'push'
-    packagesToPush: '$(System.DefaultWorkingDirectory)/**/*.nupkg;!$(System.DefaultWorkingDirectory)/**/*.symbols.nupkg'
+    packagesToPush: '$(System.DefaultWorkingDirectory)\**\*.nupkg;!$(System.DefaultWorkingDirectory)\**\*.symbols.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: '$(nuget.key)'
     verbosityPush: 'Detailed'
@@ -78,5 +78,5 @@ steps:
 #   displayName: dotnet nuget push variables['Build.SourceBranch']
 #   inputs:
 #     targetType: 'inline'
-#     script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
+#     script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https:\/api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
 
