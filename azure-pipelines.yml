@@ -59,7 +59,7 @@ steps:
   displayName: dotnet nuget push variables['Build.SourceBranch']
   inputs:
     targetType: 'inline'
-    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json --no-service-endpoint -n true'
+    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json --no-service-endpoint -n true'
 
 - task: PublishBuildArtifacts@1
   displayName: publish artifacts
