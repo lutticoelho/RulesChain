@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- pipeline
 
 pool:
   vmImage: 'windows-latest'
@@ -12,6 +13,7 @@ pool:
 variables:
   Major: '0'
   Minor: '1'
+  PackVersion: '$(Major).$(Minor).$(Build.BuildId)'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -26,10 +28,10 @@ steps:
     packagesToPack: '**/*.csproj'
     
 - task: DotNetCoreCLI@2
-  displayName: 'Run dotnet build  $(buildConfiguration)'
+  displayName: 'Run dotnet build $(buildConfiguration)'
   inputs:
     command: build
-    arguments: --configuration $(buildConfiguration)
+    arguments: --configuration $(buildConfiguration) --version $(PackVersion)
 
 - task: VSTest@2
   inputs:
@@ -37,7 +39,7 @@ steps:
     testAssemblyVer2: |
      **\bin\**\*Test*.dll
      !**\obj\**
-     !**/*testadapter.dll
+     !**\*testadapter.dll
     codeCoverageEnabled: true
     testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
     platform: '$(buildPlatform)'
@@ -48,21 +50,26 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**\*.trx'
 
-- task: NuGetCommand@2
-  displayName: nuget pack
+- task: DotNetCoreCLI@2
+  displayName: 'Pack the package $(PackVersion)'
   inputs:
     command: 'pack'
-    packagesToPack: '**\src\*.csproj'
-    packDestination: '$(Build.ArtifactStagingDirectory)'
+    configuration: '$(configuration)'
+    packagesToPack: '**\*.csproj'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'PackVersion'
+    verbosityPack: 'Detailed'
 
 - task: PublishBuildArtifacts@1
-  displayName: publish artifacts
+  displayName: 'Publish the package'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 
 - task: PowerShell@2
-  displayName: dotnet nuget push variables['Build.SourceBranch']
+  displayName: nuget push $(Build.SourceBranch)
   inputs:
     targetType: 'inline'
-    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
+    script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
 
