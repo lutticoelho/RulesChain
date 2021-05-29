@@ -55,9 +55,9 @@ steps:
     command: 'pack'
     configuration: '$(configuration)'
     packagesToPack: '**\*.csproj'
-    majorVersion: '$(Major)'
-    minorVersion: '$(Minor)'
-    patchVersion: '$(Build.BuildId)'
+    requestedMajorVersion: '$(Major)'
+    requestedMinorVersion: '$(Minor)'
+    requestedPatchVersion: '$(Build.BuildId)'
     verbosityPack: 'Detailed'
 
 
