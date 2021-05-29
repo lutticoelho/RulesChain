@@ -5,53 +5,71 @@
 
 trigger:
 - master
+- pipeline
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'windows-latest'
 
 variables:
   Major: '0'
   Minor: '1'
+  PackVersion: '$(Major).$(Minor).$(Build.BuildId)'
+  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
 steps:
 - script: echo Starting Release Build!
   displayName: 'Starting Release'
 
-- task: DotNetCoreCLI@2
+- task: NuGetCommand@2
   displayName: 'Restore'
   inputs:
     command: restore
-    projects: '**/*.csproj'
+    packagesToPack: '**/*.csproj'
     
 - task: DotNetCoreCLI@2
-  displayName: 'Run dotnet build  $(buildConfiguration)'
+  displayName: 'Run dotnet build $(buildConfiguration)'
   inputs:
     command: build
-    arguments: --configuration $(buildConfiguration)
+    arguments: --configuration $(buildConfiguration) --version $(PackVersion)
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet test
+- task: VSTest@2
   inputs:
-    command: test
-    projects: 'test/**/*.csproj'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+     **\bin\**\*Test*.dll
+     !**\obj\**
+     !**\*testadapter.dll
+    codeCoverageEnabled: true
+    testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-
-- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration) -o '$(Build.ArtifactStagingDirectory)/packages'
-  displayName: packing version $(Major).$(Minor).$(Build.BuildId)
+    testResultsFiles: '**\*.trx'
 
 - task: DotNetCoreCLI@2
-  displayName: dotnet nuget push variables['Build.SourceBranch']
+  displayName: 'Pack the package $(PackVersion)'
   inputs:
-    command: custom
-    custom: nuget
-    arguments: push $(Build.ArtifactStagingDirectory)/packages/*.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json --no-service-endpoint -n true
+    command: 'pack'
+    configuration: '$(configuration)'
+    packagesToPack: '**\*.csproj'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'PackVersion'
+    verbosityPack: 'Detailed'
 
 - task: PublishBuildArtifacts@1
-  displayName: publish artifacts
+  displayName: 'Publish the package'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- task: PowerShell@2
+  displayName: nuget push $(Build.SourceBranch)
+  inputs:
+    targetType: 'inline'
+    script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
+
