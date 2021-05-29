@@ -59,7 +59,7 @@ steps:
     minorVersion: '$(Minor)'
     patchVersion: '$(Build.BuildId)'
     verbosityPack: 'Detailed'
-    nobuild: true
+
 
 # - task: NuGetCommand@2
 #   displayName: nuget pack
