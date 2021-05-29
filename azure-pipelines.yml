@@ -48,7 +48,7 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration) -o '$(Build.ArtifactStagingDirectory)/packages'
+- script: dotnet pack /p:PackageVersion='$(Major).$(Minor).$(Build.BuildId)' --configuration $(buildConfiguration) -o '$(Build.ArtifactStagingDirectory)\packages'
   displayName: packing version $(Major).$(Minor).$(Build.BuildId)
 
 - task: DotNetCoreCLI@2
@@ -56,7 +56,7 @@ steps:
   inputs:
     command: custom
     custom: nuget
-    arguments: push $(Build.ArtifactStagingDirectory)/packages/*.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json --no-service-endpoint -n true
+    arguments: push $(Build.ArtifactStagingDirectory)\packages\*.nupkg -k $(nuget.key) -s https://api.nuget.org/v3/index.json --no-service-endpoint -n true
 
 - task: PublishBuildArtifacts@1
   displayName: publish artifacts
