@@ -61,6 +61,15 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
 
 - task: PowerShell@2
+  displayName: change directory
+  inputs:
+    targetType: 'inline'
+    script: 'cd $(Build.ArtifactStagingDirectory)'
+  inputs:
+    targetType: 'inline'
+    script: 'ls'
+
+- task: PowerShell@2
   displayName: dotnet nuget push variables['Build.SourceBranch']
   inputs:
     targetType: 'inline'
