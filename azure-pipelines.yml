@@ -57,7 +57,7 @@ steps:
     configuration: '$(configuration)'
     packagesToPack: '**\*.csproj'
     versioningScheme: 'byEnvVar'
-    versionEnvVar: 'PackVersion'
+    versionEnvVar: '$(PackVersion)'
     verbosityPack: 'Detailed'
 
 
