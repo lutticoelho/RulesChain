@@ -1,4 +1,4 @@
-﻿namespace RulesChain.UnitTest.FakeContexts.Models
+﻿namespace RulesChain.UnitTest.RuleImplementationExamples.FakeContexts.Models
 {
     public class ShopItem
     {

@@ -1,9 +1,11 @@
-﻿namespace RulesChain.Contracts
+﻿using System.Threading.Tasks;
+
+namespace RulesChain.Contracts
 {
-    public interface IRule<T>
+    public interface IRule<TContext>
     {
-        T Invoke(T context);
-        T Run(T context);
-        bool ShouldRun(T context);
+        Task Invoke(TContext context);
+        Task Run(TContext context);
+        bool ShouldRun(TContext context);
     }
 }
