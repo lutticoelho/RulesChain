@@ -13,8 +13,8 @@ pool:
 variables:
   Major: '1'
   Minor: '0'
-  PackVersion: '$(Major).$(Minor)'
-  FullVersion: '$(Major).$(Minor).$(Build.BuildId)'
+  PackVersion: '$(Major).$(Minor).$(Patch)'
+  FullVersion: '$(Major).$(Minor).$(Patch).$(Build.BuildId)'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -40,9 +40,9 @@ jobs:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-        **\bin\**\*Test*.dll
-        !**\obj\**
-        !**\*testadapter.dll
+          **\bin\**\*Test*.dll
+          !**\obj\**
+          !**\*testadapter.dll
         codeCoverageEnabled: true
         testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
         platform: '$(buildPlatform)'
