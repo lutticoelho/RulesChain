@@ -40,7 +40,6 @@ jobs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
           **\bin\**\*Test*.dll
-          !**\obj\**
           !**\*testadapter.dll
         codeCoverageEnabled: true
         testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
