@@ -13,8 +13,8 @@ pool:
 variables:
   Major: '1'
   Minor: '0'
-  PackVersion: '$(Major).$(Minor).$(Patch)'
-  FullVersion: '$(Major).$(Minor).$(Patch).$(Build.BuildId)'
+  PackVersion: '$(Major).$(Minor)'
+  FullVersion: '$(Major).$(Minor).$(Build.BuildId)'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
