@@ -5,7 +5,7 @@
 
 trigger:
 - master
-- pipeline
+- bugfix/master/azure-pipeline-version
 
 pool:
   vmImage: 'windows-latest'
@@ -13,63 +13,71 @@ pool:
 variables:
   Major: '1'
   Minor: '0'
-  PackVersion: '$(Major).$(Minor).$(Build.BuildId)'
+  PackVersion: '$(Major).$(Minor).$(Patch)'
+  FullVersion: '$(Major).$(Minor).$(Patch).$(Build.BuildId)'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
-- script: echo Starting Release Build!
-  displayName: 'Starting Release'
+jobs:
+  - job: Build & Test
+    steps:
+    - script: echo Starting Release Build!
+      displayName: 'Starting Release'
 
-- task: NuGetCommand@2
-  displayName: 'Restore'
-  inputs:
-    command: restore
-    packagesToPack: '**/*.csproj'
-    
-- task: DotNetCoreCLI@2
-  displayName: 'Run dotnet build $(buildConfiguration)'
-  inputs:
-    command: build
-    arguments: --configuration $(buildConfiguration) --version $(PackVersion)
+    - task: NuGetCommand@2
+      displayName: 'Restore'
+      inputs:
+        command: restore
+        packagesToPack: '**/*.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: 'Run dotnet build $(FullVersion) $(buildConfiguration)'
+      inputs:
+        command: build
+        arguments: --configuration $(buildConfiguration) --version $(PackVersion)
 
-- task: VSTest@2
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-     **\bin\**\*Test*.dll
-     !**\obj\**
-     !**\*testadapter.dll
-    codeCoverageEnabled: true
-    testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    - task: VSTest@2
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: |
+        **\bin\**\*Test*.dll
+        !**\obj\**
+        !**\*testadapter.dll
+        codeCoverageEnabled: true
+        testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
 
-- task: PublishTestResults@2
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**\*.trx'
+    - task: PublishTestResults@2
+      inputs:
+        testRunner: VSTest
+        testResultsFiles: '**\*.trx'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Pack the package $(PackVersion)'
-  inputs:
-    command: 'pack'
-    configuration: '$(configuration)'
-    packagesToPack: '**\*.csproj'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'PackVersion'
-    verbosityPack: 'Detailed'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish the package'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+  - job: Pack & Push
+    dependsOn: Build & Test
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Pack the package $(PackVersion)'
+      inputs:
+        command: 'pack'
+        configuration: '$(configuration)'
+        packagesToPack: '**\*.csproj'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'PackVersion'
+        verbosityPack: 'Detailed'
 
-- task: PowerShell@2
-  displayName: nuget push $(Build.SourceBranch)
-  inputs:
-    targetType: 'inline'
-    script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish the package'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+    - task: PowerShell@2
+      displayName: nuget push $(Build.SourceBranch)
+      inputs:
+        targetType: 'inline'
+        script: 'nuget push $(Build.ArtifactStagingDirectory)\**\*.nupkg -ApiKey $(nuget.key) -Source https://api.nuget.org/v3/index.json -NoServiceEndpoint -NonInteractive true -Verbosity detailed'
 
