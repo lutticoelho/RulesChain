@@ -19,7 +19,7 @@ variables:
   buildConfiguration: 'Release'
 
 jobs:
-  - job: 'Build & Test'
+  - job: 'Build_and_Test'
     steps:
     - script: echo Starting Release Build!
       displayName: 'Starting Release'
@@ -54,8 +54,8 @@ jobs:
         testResultsFiles: '**\*.trx'
 
 
-  - job: 'Pack & Push'
-    dependsOn: 'Build & Test'
+  - job: 'Pack_and_Push'
+    dependsOn: 'Build_and_Test'
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     steps:
     - task: DotNetCoreCLI@2
