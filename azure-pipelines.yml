@@ -5,7 +5,6 @@
 
 trigger:
 - master
-- bugfix/master/azure-pipeline-version
 
 pool:
   vmImage: 'windows-latest'
