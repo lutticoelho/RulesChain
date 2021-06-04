@@ -3,6 +3,7 @@ using RulesChain.Contracts;
 
 namespace RulesChain
 {
+    /// <inheritdoc cref="IRule{TContext}"/>
     public abstract class Rule<TContext> : IRule<TContext>
     {
         protected readonly RuleHandlerDelegate<TContext> Next;
@@ -12,19 +13,14 @@ namespace RulesChain
             Next = next;
         }
 
-        /// <summary>
-        /// Validates if the rules should be executed or not
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc cref="IRule{TContext}.ShouldRun"/>
         public abstract bool ShouldRun(TContext context);
 
-        /// <summary>
-        /// Executes the rule
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc cref="IRule{TContext}.Run"/>
         public abstract Task Run(TContext context);
 
-        public virtual Task Invoke(TContext context)
+        /// <inheritdoc cref="IRule{TContext}.Invoke"/>
+        public Task Invoke(TContext context)
         {
             if(ShouldRun(context))
                 return Run(context);
@@ -34,5 +30,4 @@ namespace RulesChain
                     : Task.CompletedTask;
         }
     }
-
 }

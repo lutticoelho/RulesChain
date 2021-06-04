@@ -7,6 +7,7 @@ using RulesChain.Contracts;
 
 namespace RulesChain
 {
+    /// <inheritdoc cref="IRuleChain{TContext}"/>
     public class RuleChain<TContext> : IRuleChain<TContext>
     {
         private readonly IServiceProvider _services;
@@ -18,11 +19,11 @@ namespace RulesChain
         public RuleChain(IServiceProvider services) => _services = services;
 
         /// <summary>
-        /// 
+        /// Gets services from <see cref="IServiceProvider"/>
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        /// <param name="type">Type of the service that should be build</param>
+        /// <param name="args">Constructor parameters</param>
+        /// <returns>A concrete instance o the requested service.</returns>
         protected virtual object GetService(Type type, params object[] args)
         {
             return args == null || args.Length == 0
@@ -30,10 +31,7 @@ namespace RulesChain
                 : Activator.CreateInstance(type, args);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc cref="IRuleChain{TContext}.Build"/>
         public RuleHandlerDelegate<TContext> Build()
         {
             if (_built) throw new InvalidOperationException("Chain can only be built once");
@@ -47,12 +45,8 @@ namespace RulesChain
             return next;
         }
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TRule"></typeparam>
-        /// <returns></returns>
-        public IRuleChain<TContext> Use<TRule>()
+        /// <inheritdoc cref="IRuleChain{TContext}.Build"/>
+        public IRuleChain<TContext> Use<TRule>() where TRule : IRule<TContext>
         {
             _components.Push(CreateDelegate<TRule>);
             return this;
