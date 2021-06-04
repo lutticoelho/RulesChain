@@ -1,7 +1,8 @@
 # RulesChain
-[![Build Status](https://dev.azure.com/RulesChain/RulesChain/_apis/build/status/lutticoelho.RulesChain?branchName=master)](https://dev.azure.com/RulesChain/RulesChain/_build/latest?definitionId=1&branchName=master)
+![Nuget](https://img.shields.io/nuget/dt/RulesChain)![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/lutticoelho/ruleschain)![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/lutticoelho/ruleschain/latest/develop?sort=semver)[![Build Status](https://dev.azure.com/RulesChain/RulesChain/_apis/build/status/lutticoelho.RulesChain?branchName=master)](https://dev.azure.com/RulesChain/RulesChain/_build/latest?definitionId=1&branchName=master)![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/lutticoelho/ruleschain/1/develop)![GitHub issues](https://img.shields.io/github/issues/lutticoelho/ruleschain)![GitHub Repo stars](https://img.shields.io/github/stars/lutticoelho/ruleschain)![GitHub](https://img.shields.io/github/license/lutticoelho/ruleschain)
 
 RulesChain is a small Rules Engine lib that simplify writing business rules in .NET environment. Its based on Rules Design Pattern and Chain of Responsibility Pattern and works like Asp.Net Core middlewares.
+
 
 ## Table of Contents ##
 
@@ -46,8 +47,6 @@ The first discount is based on user birthday. If user buy something on their bir
             // Only apply birthday disccount if the discount applied by the other rules are smaller than this
             if (birthDayDiscount > context.DiscountApplied)
                 context.DiscountApplied = birthDayDiscount;
-
-            return context;
         }
 
         public override bool ShouldRun(ApplyDiscountContext context)
@@ -78,8 +77,6 @@ Another discount will be applied if this is the first order of the client. If so
             // Only apply first order disccount if the discount applied by the other rules are smaller than this
             if (myDiscount > context.DiscountApplied)
                 context.DiscountApplied = myDiscount;
-
-            return context;
         }
 
         public override bool ShouldRun(ApplyDiscountContext context)
