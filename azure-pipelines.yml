@@ -27,12 +27,12 @@ jobs:
       displayName: 'Restore'
       inputs:
         command: restore
-        packagesToPack: '**/*.csproj'
+        packagesToPack: '**\*.csproj'
         
     - task: DotNetCoreCLI@2
       displayName: 'Run dotnet build $(FullVersion) $(buildConfiguration)'
       inputs:
-        projects: '**/*.csproj'
+        projects: '**\*.csproj'
         command: build
         arguments: '--configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed'
 
