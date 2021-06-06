@@ -9,10 +9,10 @@
         /// <summary>
         /// Adds a rule to the application's request chain.
         /// </summary>
-        /// <typeparam name="TContext"><see cref="TContext"/></typeparam>
-        /// <typeparam name="TRule"></typeparam>
-        /// <returns>The <see cref="IRuleChain{TContext }"/>.</returns>
-        IRuleChain<TContext> Use<TRule>();
+        /// <typeparam name="TContext">The context shared by all rules</typeparam>
+        /// <typeparam name="TRule"><see cref="IRule{TContext}"/></typeparam>
+        /// <returns>The <see cref="IRuleChain{TContext}"/>.</returns>
+        IRuleChain<TContext> Use<TRule>() where TRule : IRule<TContext>;
 
         /// <summary>
         /// Builds the delegate used by this application to process rules executions.

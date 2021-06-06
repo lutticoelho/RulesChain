@@ -27,27 +27,26 @@ jobs:
       displayName: 'Restore'
       inputs:
         command: restore
-        packagesToPack: '**/*.csproj'
+        packagesToPack: '**\*.csproj'
         
     - task: DotNetCoreCLI@2
       displayName: 'Run dotnet build $(FullVersion) $(buildConfiguration)'
       inputs:
         command: build
-        arguments: --configuration $(buildConfiguration) --version $(PackVersion)
+        arguments: '--configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed'
 
-    - task: VSTest@2
+    - task: DotNetCoreCLI@2
+      displayName: 'Execute unit tests'
       inputs:
-        testSelector: 'testAssemblies'
-        testAssemblyVer2: |
-          **\bin\**\*Test*.dll
-          !**\*testadapter.dll
-        codeCoverageEnabled: true
-        testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
-
+        command: test
+        publishTestResults: true
+        projects: '**\*Test*.csproj'
+        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+        
     - task: PublishTestResults@2
+      displayName: 'Execute unit tests results'
       inputs:
+        searchFolder: '$(Agent.TempDirectory)'
         testRunner: VSTest
         testResultsFiles: '**\*.trx'
 
