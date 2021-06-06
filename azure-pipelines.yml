@@ -39,8 +39,7 @@ jobs:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-          **\$(buildConfiguration)\*Test.dll
-          **\$(buildConfiguration)\**\*Test.dll
+          **\RulesChain.UnitTest\bin\$(buildConfiguration)\netcoreapp2.1\RulesChain.UnitTest.dll
           !**\*testadapter.dll
           !**\*Microsoft.VisualStudio.TestPlatform*
           !**\obj\**
