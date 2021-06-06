@@ -40,8 +40,15 @@ jobs:
       inputs:
         command: test
         projects: '**\*Test*.csproj'
-        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+        arguments: '--configuration $(buildConfiguration) --logger trx --collect "Code coverage"'
         
+    - task: PublishTestResults@2
+      inputs:
+        searchFolder: '$(Agent.TempDirectory)'
+        testRunner: VSTest
+        testResultsFiles: '**\*.trx'
+
+
   - job: 'Pack_and_Push'
     dependsOn: 'Build_and_Test'
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
