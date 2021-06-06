@@ -32,7 +32,6 @@ jobs:
     - task: DotNetCoreCLI@2
       displayName: 'Run dotnet build $(FullVersion) $(buildConfiguration)'
       inputs:
-        projects: '**/*.csproj'
         command: build
         arguments: --configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed
 
