@@ -35,6 +35,12 @@ jobs:
         command: build
         arguments: '--configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed'
 
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: test
+        projects: '**\*Test*.csproj'
+        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+        
     - task: VSTest@2
       inputs:
         testSelector: 'testAssemblies'
