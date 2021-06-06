@@ -39,8 +39,8 @@ jobs:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-          **\$(buildConfiguration)\*Test*.dll
-          **\$(buildConfiguration)\**\*Test*.dll
+          **\$(buildConfiguration)\*Test.dll
+          **\$(buildConfiguration)\**\*Test.dll
           !**\*testadapter.dll
           !**\*Microsoft.VisualStudio.TestPlatform*
           !**\obj\**
