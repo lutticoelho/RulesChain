@@ -34,7 +34,7 @@ jobs:
       inputs:
         projects: '**/*.csproj'
         command: build
-        arguments: --configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed
+        arguments: '--configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed'
 
     - task: VSTest@2
       inputs:
