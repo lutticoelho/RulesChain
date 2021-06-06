@@ -36,7 +36,7 @@ jobs:
         arguments: '--configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed'
 
     - task: DotNetCoreCLI@2
-      displayName: 'build Test project $(buildConfiguration)'
+      displayName: 'Execute unit tests'
       inputs:
         command: test
         publishTestResults: true
@@ -44,6 +44,7 @@ jobs:
         arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
         
     - task: PublishTestResults@2
+      displayName: 'Execute unit tests results'
       inputs:
         searchFolder: '$(Agent.TempDirectory)'
         testRunner: VSTest
