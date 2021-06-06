@@ -32,6 +32,7 @@ jobs:
     - task: DotNetCoreCLI@2
       displayName: 'Run dotnet build $(FullVersion) $(buildConfiguration)'
       inputs:
+        projects: '**/*.csproj'
         command: build
         arguments: --configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed
 
@@ -40,6 +41,7 @@ jobs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
           **\bin\**\*Test*.dll
+          **/bin/**/*Test*.dll
           !**\obj\**
           !**\*testadapter.dll
         codeCoverageEnabled: true
