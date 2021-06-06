@@ -39,8 +39,11 @@ jobs:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-          **\bin\**\*Test*.dll
+          **\$(buildConfiguration)\*Test*.dll
+          **\$(buildConfiguration)\**\*Test*.dll
           !**\*testadapter.dll
+          !**\*Microsoft.VisualStudio.TestPlatform*
+          !**\obj\**
         codeCoverageEnabled: true
         testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
         platform: '$(buildPlatform)'
