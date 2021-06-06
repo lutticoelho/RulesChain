@@ -39,10 +39,9 @@ jobs:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-          **\RulesChain.UnitTest.dll
-          !**\*testadapter.dll
-          !**\*Microsoft.VisualStudio.TestPlatform*
+          **\bin\**\*Test*.dll
           !**\obj\**
+          !**\*testadapter.dll
         codeCoverageEnabled: true
         testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
         platform: '$(buildPlatform)'
@@ -50,6 +49,7 @@ jobs:
 
     - task: PublishTestResults@2
       inputs:
+        searchFolder: '$(Agent.TempDirectory)'
         testRunner: VSTest
         testResultsFiles: '**\*.trx'
 
