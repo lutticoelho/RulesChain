@@ -28,34 +28,20 @@ jobs:
       inputs:
         command: restore
         packagesToPack: '**\*.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: 'Run dotnet build $(FullVersion) $(buildConfiguration)'
+      inputs:
+        command: build
+        arguments: '--configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed'
 
     - task: DotNetCoreCLI@2
       displayName: 'build Test project $(buildConfiguration)'
       inputs:
-        command: build
+        command: test
         projects: '**\*Test*.csproj'
-        arguments: '--configuration $(buildConfiguration)'
+        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
         
-    - task: VSTest@2
-      inputs:
-        testSelector: 'testAssemblies'
-        testAssemblyVer2: |
-          **\bin\**\*Test*.dll
-          **/bin/**/*Test*.dll
-          !**\obj\**
-          !**\*testadapter.dll
-        codeCoverageEnabled: true
-        testRunTitle: '$(Build.DefinitionName) | $(Build.Reason) |$(Build.SourceVersion)'
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
-
-    - task: PublishTestResults@2
-      inputs:
-        searchFolder: '$(Agent.TempDirectory)'
-        testRunner: VSTest
-        testResultsFiles: '**\*.trx'
-
-
   - job: 'Pack_and_Push'
     dependsOn: 'Build_and_Test'
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
