@@ -28,20 +28,13 @@ jobs:
       inputs:
         command: restore
         packagesToPack: '**\*.csproj'
-        
-    - task: DotNetCoreCLI@2
-      displayName: 'Run dotnet build $(FullVersion) $(buildConfiguration)'
-      inputs:
-        command: build
-        projects: '**\*.sln'
-        arguments: '--configuration $(buildConfiguration) --version $(PackVersion) --verbosity detailed'
 
     - task: DotNetCoreCLI@2
       displayName: 'build Test project $(buildConfiguration)'
       inputs:
-        command: test
+        command: build
         projects: '**\*Test*.csproj'
-        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+        arguments: '--configuration $(buildConfiguration)'
         
     - task: VSTest@2
       inputs:
