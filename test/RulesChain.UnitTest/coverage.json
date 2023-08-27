@@ -1,0 +1,404 @@
+{
+  "RulesChain.Contracts.dll": {},
+  "RulesChain.dll": {
+    "D:\\projetos\\open-source\\RulesChain\\src\\RulesChain\\Rule.cs": {
+      "RulesChain.Rule`1": {
+        "System.Threading.Tasks.Task RulesChain.Rule`1::Invoke(TContext)": {
+          "Lines": {
+            "24": 15,
+            "25": 15,
+            "26": 12,
+            "28": 3,
+            "29": 3,
+            "30": 3,
+            "31": 15
+          },
+          "Branches": [
+            {
+              "Line": 25,
+              "Offset": 10,
+              "EndOffset": 12,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 12
+            },
+            {
+              "Line": 25,
+              "Offset": 10,
+              "EndOffset": 22,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 28,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 28,
+              "Offset": 28,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void RulesChain.Rule`1::.ctor(RulesChain.Contracts.RuleHandlerDelegate`1<TContext>)": {
+          "Lines": {
+            "11": 17,
+            "12": 17,
+            "13": 17,
+            "14": 17
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\projetos\\open-source\\RulesChain\\src\\RulesChain\\RuleChain.cs": {
+      "RulesChain.RuleChain`1": {
+        "System.Object RulesChain.RuleChain`1::GetService(System.Type,System.Object[])": {
+          "Lines": {
+            "29": 25,
+            "30": 25,
+            "31": 25,
+            "32": 25,
+            "33": 25
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 2,
+              "EndOffset": 4,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 15
+            },
+            {
+              "Line": 30,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 15
+            },
+            {
+              "Line": 30,
+              "Offset": 2,
+              "EndOffset": 17,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 10
+            },
+            {
+              "Line": 30,
+              "Offset": 6,
+              "EndOffset": 17,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 10
+            }
+          ]
+        },
+        "RulesChain.Contracts.RuleHandlerDelegate`1<TContext> RulesChain.RuleChain`1::Build()": {
+          "Lines": {
+            "37": 7,
+            "38": 8,
+            "39": 11,
+            "40": 21,
+            "41": 15,
+            "43": 15,
+            "44": 15,
+            "45": 15,
+            "46": 6,
+            "47": 6,
+            "48": 6
+          },
+          "Branches": [
+            {
+              "Line": 38,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 38,
+              "Offset": 9,
+              "EndOffset": 22,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            },
+            {
+              "Line": 39,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 39,
+              "Offset": 28,
+              "EndOffset": 53,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 6
+            },
+            {
+              "Line": 40,
+              "Offset": 91,
+              "EndOffset": 56,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 15
+            },
+            {
+              "Line": 40,
+              "Offset": 91,
+              "EndOffset": 93,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 6
+            }
+          ]
+        },
+        "RulesChain.Contracts.IRuleChain`1<TContext> RulesChain.RuleChain`1::Use()": {
+          "Lines": {
+            "52": 15,
+            "53": 15,
+            "54": 15,
+            "55": 15
+          },
+          "Branches": []
+        },
+        "RulesChain.Contracts.RuleHandlerDelegate`1<TContext> RulesChain.RuleChain`1::CreateDelegate(RulesChain.Contracts.RuleHandlerDelegate`1<TContext>)": {
+          "Lines": {
+            "58": 15,
+            "59": 15,
+            "60": 15,
+            "63": 15,
+            "64": 15,
+            "65": 15,
+            "66": 10,
+            "69": 15,
+            "72": 15,
+            "73": 15,
+            "74": 15
+          },
+          "Branches": [
+            {
+              "Line": 65,
+              "Offset": 62,
+              "EndOffset": 64,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 10
+            },
+            {
+              "Line": 65,
+              "Offset": 62,
+              "EndOffset": 77,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 15
+            }
+          ]
+        },
+        "System.Reflection.MethodInfo RulesChain.RuleChain`1::GetValidInvokeMethodInfo(System.Type)": {
+          "Lines": {
+            "77": 18,
+            "79": 18,
+            "80": 18,
+            "81": 1,
+            "84": 17,
+            "85": 1,
+            "88": 16,
+            "89": 16,
+            "90": 1,
+            "92": 15,
+            "93": 15
+          },
+          "Branches": [
+            {
+              "Line": 80,
+              "Offset": 22,
+              "EndOffset": 24,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 80,
+              "Offset": 22,
+              "EndOffset": 35,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 17
+            },
+            {
+              "Line": 84,
+              "Offset": 61,
+              "EndOffset": 63,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 84,
+              "Offset": 61,
+              "EndOffset": 74,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 16
+            },
+            {
+              "Line": 89,
+              "Offset": 85,
+              "EndOffset": 87,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 15
+            },
+            {
+              "Line": 89,
+              "Offset": 85,
+              "EndOffset": 112,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            },
+            {
+              "Line": 89,
+              "Offset": 117,
+              "EndOffset": 119,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 89,
+              "Offset": 117,
+              "EndOffset": 130,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 15
+            }
+          ]
+        },
+        "System.Object[] RulesChain.RuleChain`1::GetDependencies(System.Type,System.Func`3<System.Type,System.Object[],System.Object>)": {
+          "Lines": {
+            "96": 15,
+            "97": 35,
+            "98": 15,
+            "99": 25,
+            "101": 15,
+            "102": 0,
+            "104": 40,
+            "105": 15,
+            "106": 15,
+            "107": 10,
+            "108": 15,
+            "109": 15
+          },
+          "Branches": [
+            {
+              "Line": 97,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 97,
+              "Offset": 26,
+              "EndOffset": 51,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 15
+            },
+            {
+              "Line": 98,
+              "Offset": 66,
+              "EndOffset": 68,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 5
+            },
+            {
+              "Line": 98,
+              "Offset": 75,
+              "EndOffset": 77,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 98,
+              "Offset": 75,
+              "EndOffset": 100,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 5
+            },
+            {
+              "Line": 98,
+              "Offset": 66,
+              "EndOffset": 112,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 10
+            },
+            {
+              "Line": 101,
+              "Offset": 127,
+              "EndOffset": 129,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 101,
+              "Offset": 127,
+              "EndOffset": 138,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 15
+            },
+            {
+              "Line": 104,
+              "Offset": 150,
+              "EndOffset": 152,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 104,
+              "Offset": 150,
+              "EndOffset": 175,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 15
+            }
+          ]
+        },
+        "System.Void RulesChain.RuleChain`1::.ctor(System.IServiceProvider)": {
+          "Lines": {
+            "15": 9,
+            "16": 9,
+            "20": 18
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}

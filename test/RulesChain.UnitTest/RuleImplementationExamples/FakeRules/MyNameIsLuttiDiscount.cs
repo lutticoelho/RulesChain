@@ -7,8 +7,16 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
 {
     public class MyNameIsLuttiDiscount : Rule<ApplyDiscountContext>
     {
+        private readonly int _year;
         public MyNameIsLuttiDiscount(RuleHandlerDelegate<ApplyDiscountContext> next) : base(next)
-        { }
+        {
+            _year = -1;
+        }
+
+        public MyNameIsLuttiDiscount(RuleHandlerDelegate<ApplyDiscountContext> next, int year) : base(next)
+        {
+            _year = year;
+        }
 
         public override async Task Run(ApplyDiscountContext context)
         {
@@ -21,6 +29,7 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
             {
                 context.DiscountApplied = myDiscount;
                 context.Properties["discountType"] = "MyNameIsLuttiDiscount";
+                context.Properties["year"] = _year;
             }
         }
 

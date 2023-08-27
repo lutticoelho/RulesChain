@@ -37,4 +37,23 @@ namespace RulesChain.UnitTest.RuleImplementationExamples.FakeRules
             return !string.IsNullOrWhiteSpace(context.Context?.CouponCode) && context.Context?.Items.Any() == true;
         }
     }
+
+    public class InvalidRule
+    {
+    }
+
+    public class InvalidRule2
+    {
+        public void Invoke() { }
+    }
+    public class InvalidRule3
+    {
+        public Task Invoke() { return Task.CompletedTask; }
+    }
+
+    public class InvalidRule4
+    {
+        public Task Invoke(string text) { return Task.CompletedTask; }
+    }
+
 }
