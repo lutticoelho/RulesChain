@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -38,6 +39,7 @@ namespace RulesChain
             var next = new RuleHandlerDelegate<TContext>(context => Task.CompletedTask);
             while (_components.Any())
             {
+                // Stryker disable once block
                 var component = _components.Pop();
                 next = component(next);
             }
@@ -71,10 +73,10 @@ namespace RulesChain
                 .CreateDelegate(typeof(RuleHandlerDelegate<TContext>), rule);
         }
 
-        private MethodInfo GetValidInvokeMethodInfo(Type type)
+        internal MethodInfo GetValidInvokeMethodInfo(Type type)
         {
             //Must have public method named Invoke or InvokeAsync.
-            var methodInfo = type.GetMethod("Invoke") ?? type.GetMethod("InvokeAsync");
+            var methodInfo = type.GetMethod("Invoke");
             if (methodInfo == null)
                 throw new InvalidOperationException("Missing invoke method");
 

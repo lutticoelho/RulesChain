@@ -18,6 +18,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RulesChain.Contracts\RulesChain.Contracts.csproj" />
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>RulesChain.UnitTest</_Parameter1> <!-- We use the value of AssemblyName to declare the value of the attribute -->
+    </AssemblyAttribute>
   </ItemGroup>
 
 </Project>

@@ -17,4 +17,9 @@ This package includes only the interfaces that is used on RuleChain package. You
     <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
 
+  <ItemGroup>
+	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+	  <_Parameter1>RulesChain.UnitTest</_Parameter1> <!-- We use the value of AssemblyName to declare the value of the attribute -->
+	</AssemblyAttribute>
+  </ItemGroup>
 </Project>
